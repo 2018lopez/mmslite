@@ -1,17 +1,22 @@
+
 const express = require('express'),
-    PORT = 3004,
+    PORT = 3001,
     bodyParser = require('body-parser'),
     server = express(),
-    router = require('./router/router')
+    session = require('express-session'),
+    router = require('./router/router'),
     cors = require('cors')
-    
+    cookieParser = require("cookie-parser")
+
+    dotenv=require('dotenv')
+    dotenv.config()
     
 
     server.use(bodyParser.json())
-    .use(cors())
+          .use(bodyParser.urlencoded({extended : true}))
+          .use(cors())
+        .use(cookieParser())
         .use('/api',router)
-        .use(bodyParser.urlencoded({extended : true}))
-        
         .listen(PORT,()=>console.log(
             `[+] server started on port ${PORT} 
             [http://localhost:${PORT}]`

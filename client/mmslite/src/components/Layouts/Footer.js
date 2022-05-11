@@ -20,9 +20,9 @@ export default function Footer(){
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Box borderBottom={1} > <h3>Quick Links </h3></Box>
-                            <Box> <Link style={{textDecoration: 'none'}} href="/" color='inherit' >Explore Market</Link></Box>
-                            <Box> <Link style={{textDecoration: 'none'}} href="/" color='inherit' >About Us</Link></Box>
-                            <Box> <Link style={{textDecoration: 'none'}}href="/" color='inherit' >Be Vendor</Link></Box>
+                            <Box> <Link style={{textDecoration: 'none'}} href="/Explore-Market" color='inherit' >Explore Market</Link></Box>
+                            <Box> <Link style={{textDecoration: 'none'}} href="/AboutUs" color='inherit' >About Us</Link></Box>
+                            <Box> <Link style={{textDecoration: 'none'}}href="/Be-Vendor" color='inherit' >Be Vendor</Link></Box>
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Box borderBottom={1}> <h3>Contact Information</h3></Box>

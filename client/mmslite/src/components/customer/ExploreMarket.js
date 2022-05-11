@@ -1,10 +1,16 @@
 import * as React from 'react';
+import Header from '../Layouts/Header'
+import Footer from '../Layouts/Footer'
 
 const ExploreMarket = ()=>{
 
     return(
-
-        <h1>Explore Market</h1>
+        <div>
+            <Header/>
+             <h1>Explore Market</h1>
+            <Footer/>
+        </div>
+      
     );
 
 };

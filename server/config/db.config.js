@@ -2,7 +2,7 @@ module.exports={
     host:"localhost",
     user:'root',
     password:'',
-    database:'*database name',
+    database:'marketdb',
     port:3306,
     connectionLimit:5
 }
