@@ -4,12 +4,16 @@ import AddIcon from '@mui/icons-material/Add';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import {  getMarkets,stalls,createInvoice } from '../../../../service/call';
+import {  getMarkets,stalls,createInvoice, updateInvoiceStatus } from '../../../../service/call';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Alert from '@mui/material/Alert';
 import Snackbar from "@mui/material/Snackbar";
+import { useForm } from 'react-hook-form';
+import {  AutoCompleteFieldController } from '../../../lib/component'
+import { useRef } from "react";
 
+import { Autocomplete } from "@mui/material";
 
 
 import {
@@ -24,18 +28,18 @@ import {
   } from '@mui/material';
 
 export default function CreateInvoice() {
-    const [open, setOpen] = React.useState(false);
+    const [openCreate, setOpenCreate] = React.useState(false);
     const [markets, setMarket] = React.useState([]);
     const [stalles, setStall] = React.useState([])
+    const[selectMarket, setSelectMarket] = React.useState([])
     const[status, setStatus] = React.useState([])
     const[msg, setMsg]=React.useState([])
     const [snack, setSnack] = React.useState(false);
-
-  
+    const [dMarket, setDMarket] = React.useState(false)
     const [values, setValues] = React.useState({
         market: 'San Ignacio Market',
        stall: 'None',
-       dueData: '2022-05-24',
+       dueData: "2022-05-24",
        rent:0,
        water:0,
        light:0,
@@ -45,35 +49,52 @@ export default function CreateInvoice() {
 
       });
     
-
+       //FORM HOOK 
+    const {  control,  watch,  formState: { errors } } = useForm({
+        shouldUnregister: true
+    });
+  
+    let marketSelect;
+    let stallSelect;
+    marketSelect = watch('market', 'San Ignacio Market')
+    stallSelect = watch('stall')
     React.useEffect(()=>{
   
         
         getMarket()
-        getStalls()
+        
+     
+        
        
        
       }, []);
 
+      
       const getMarket = async () =>{
         
     
         const res = await getMarkets()
       
         setMarket(res.data)
-        //getStalls()
+       
+       
         
      }
 
-
+     const handleSelectMarket = (event,value) =>{
+        let isStalls = markets.filter((s) => s.market === event.target.value);
+        // isStalls = [...new Set(isStalls.map((item) => item.m_name))]
+        console.log(isStalls)
+     }
 
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setOpenCreate(true);
       };
     
       const handleClose = (event) => {
-        setOpen(false);
+        setSnack(false)
+        setOpenCreate(false);
         setValues({
             market: 'San Ignacio Market',
             stall: 'None',
@@ -86,56 +107,81 @@ export default function CreateInvoice() {
             total:0
             })
       };
-      const handleChange =  (event) => {
+      const handleChange = async (event) => {
       
         
-      getStalls()
+        
+        
         setValues({
             ...values,
             [event.target.name]: event.target.value})
 
+          
             
+        //     setSelectMarket({[values.market] : event.target.value})
+        //    let sMarket = Object.keys(selectMarket)
+        //    nMarket = sMarket.toString()
+          
+    
+        // const res = await stalls(selectMarket.m_name)
+        // setStall(res.data)
 
-        
       }
      
-
-      const getStalls = async() =>{
-
-        
-
-        const res = await stalls(values.market)
-       
-        setStall(res.data)
-        console.log(":::", values.market)
-        
+   
+     const getStalls = async () =>{
+         const chess =  selectMarket.m_name
+        const data = {...values, market: chess }
+        console.log('Stall',data, selectMarket.m_name)
+        //  const res = await stalls(selectMarket.m_name)
+        // setStall(res.data)
      }
-
+     
+    
 
       const invoiceCreate = async () =>{
           const itotal =  parseFloat(values.rent) + parseFloat(values.water) + parseFloat(values.light) + parseFloat(values.other);
        const data = {...values, total: itotal }
+      
+console.log('Create:', marketSelect.m_name, data)
+        //   const res = await createInvoice(data)
+        //   try{
 
-          const res = await createInvoice(data)
-          try{
-
-            if(res.status === 200){
-                setStatus('success')
-                setMsg(res.data.msg)
-                setSnack(true)
+        //     if(res.status === 200){
+        //         setStatus('success')
+        //         setMsg(res.data.msg)
+        //         setSnack(true)
               
-              setTimeout(() => handleClose(), 3000)
+        //       setTimeout(() => handleClose(), 2000)
     
     
-            }
-          }catch(e){
+        //     }
+        //   }catch(e){
   
+        //     setStatus('error')
+        //     setMsg("Failed To Create Invoice")
+        //     setSnack(true)
           
+        //   setTimeout(() => handleClose(), 3000)
             
-          }
+        //   }
 
 
       }
+
+      React.useEffect(() =>{
+       
+        console.log(marketSelect)
+        if(marketSelect !== undefined && values.market !== ""){
+          
+            console.log("PV")
+        //     const datas = setValues({...values, market:marketSelect})
+        //      const res =  stalls(datas)
+        // setStall(res.data)
+        }
+
+      }, [])
+
 
      
   
@@ -144,7 +190,7 @@ export default function CreateInvoice() {
       <div>
           <Button variant="outlined" color="success" onClick={handleClickOpen} > <AddIcon/> Create Invoice  </Button>
           <Dialog
-        open={open}
+        open={openCreate}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -171,26 +217,38 @@ export default function CreateInvoice() {
                     md={6}
                     xs={12}
                     >
-                    <TextField
+                        <AutoCompleteFieldController
+                    options={markets.map(el => ({...el, label: (el.m_name )}) )}
+                    //errors={errors.product || null}
+                    control={control}
+                    name="market"
+                    label="Market"
+                    onChange={handleSelectMarket}
+                    rules={{ required: "Market is Required!" }}
+                
+                />
+                
+                    {/* <TextField
                         fullWidth
                         label="Select Market"
                         name="market"
                         required
                         select
-                        SelectProps={{ native: true }}
+                        control={control}
+                        SelectProps={{ native: true}}
                         value={values.market}
                         onChange={ handleChange}
                         variant="outlined"
                     >
                           {markets.map((option) => (
                   <option
-                    key={option.m_name}
+                   
                     value={option.m_name}
                   >
                     {option.m_name}
                   </option>
                 ))}
-                    </TextField>
+                    </TextField> */}
                     </Grid>
                     <Grid
                     item
@@ -203,6 +261,7 @@ export default function CreateInvoice() {
                         name="stall"
                         onChange={handleChange}
                         required
+                        control={control}
                         select
                         SelectProps={{ native: true }}
                         value={values.stall}

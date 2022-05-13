@@ -23,24 +23,28 @@ const ExpenseReport= ()=>{
     
       const res = await totalExpense(username)
       setExpense(res)
-      
     
     
      }
 
-     React.state = {
+     let usernameIn = localStorage.getItem('username')
+     let light =Number(expenses.Electricity)
+     let water =Number(expenses.Water)
+     let rent =Number(expenses.Rental)
+
+    let exp = {
         
-        username : localStorage.getItem('username'),
-        price1: Number(expenses.Electricity),
-        price2: Number(expenses.Water),
-        price3:Number(expenses.Rental)
+        username : usernameIn,
+        price1: light,
+        price2: water,
+        price3: rent
     }
      
    
  
     
     const  createAndDownloadPdf = () => {
-        axios.post('http://localhost:3001/api/vendor/create-expense-pdf', React.state)
+        axios.post('http://localhost:3001/api/vendor/create-expense-pdf', exp)
           .then(() => axios.get('http://localhost:3001/api/vendor/expense-pdf', { responseType: 'blob' }))
           .then((res) => {
             const pdfBlob = new Blob([res.data], { type: 'application/pdf' });

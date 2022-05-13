@@ -7,7 +7,8 @@ const express = require('express'),
     router = require('./router/router'),
     cors = require('cors')
     cookieParser = require("cookie-parser")
-
+    fileupload = require("express-fileupload");
+    
     dotenv=require('dotenv')
     dotenv.config()
     
@@ -16,7 +17,9 @@ const express = require('express'),
           .use(bodyParser.urlencoded({extended : true}))
           .use(cors())
         .use(cookieParser())
+        .use(express.static('public'))
         .use('/api',router)
+        .use(fileupload({useTempFiles : true}))
         .listen(PORT,()=>console.log(
             `[+] server started on port ${PORT} 
             [http://localhost:${PORT}]`

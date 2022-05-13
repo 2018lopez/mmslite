@@ -23,11 +23,11 @@ const InvoiceReport = ()=>{
     
         const res = await invoiceReport(username)
         setInvoice(res)
-    
+        
      }
 
 
-    React.state = {
+   let inv = {
         username : localStorage.getItem('username'),
         pending: Number(invoices.Pending),
         total: Number(invoices.Total)
@@ -37,7 +37,7 @@ const InvoiceReport = ()=>{
  
     
     const  createAndDownloadPdf = () => {
-        axios.post('http://localhost:3001/api/vendor/create-invoice-pdf', React.state)
+        axios.post('http://localhost:3001/api/vendor/create-invoice-pdf', inv)
           .then(() => axios.get('http://localhost:3001/api/vendor/invoice-pdf', { responseType: 'blob' }))
           .then((res) => {
             const pdfBlob = new Blob([res.data], { type: 'application/pdf' });

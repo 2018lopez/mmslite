@@ -59,10 +59,9 @@ module.exports = {
                 invoice.detail = req.body.dDetails
                 invoice.other = parseInt(req.body.other)
                 try{
-  
-
-                console.log(invoice)                       
-                 res.json({msg: "Successfully Created Invoice"})
+                    console.log(invoice)
+                    // let data = Invoice.post.createInvoice(invoice)
+                  res.json({msg: "Successfully Created Invoice"})
 
             }catch(e){
                 console.log(e)
@@ -73,6 +72,22 @@ module.exports = {
 
     put:{
 
+        async updateInvoiceStatus(req,res){
+            let invoice ={}
+
+            
+                invoice.invoiceNo = req.body.invoiceNoUpdate
+                invoice.status = req.body.editStatus
+               
+                try{
+                    
+                    let data = Invoice.put.updateInvoiceStatus(invoice)
+                  res.json({msg: "Successfully Updated Invoice"})
+
+            }catch(e){
+                console.log(e)
+            }
+        }
 
     }
 }

@@ -14,7 +14,7 @@ module.exports = {
     post:{
 
         async  expensePdf(req, res){
-
+            console.log(req.body)
             pdf.create(pdfTemplate(req.body), {}).toFile('expense.pdf', (err) => {
                 if(err) {
                     res.send(Promise.reject());

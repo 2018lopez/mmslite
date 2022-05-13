@@ -27,7 +27,7 @@ const StockReport= ()=>{
      }
 
 
-    React.state = {
+    let stk = {
         username : localStorage.getItem('username'),
         total: stocks.stock
       }
@@ -35,7 +35,7 @@ const StockReport= ()=>{
  
     
     const  createAndDownloadPdf = () => {
-        axios.post('http://localhost:3001/api/vendor/create-product-pdf', React.state)
+        axios.post('http://localhost:3001/api/vendor/create-product-pdf', stk)
           .then(() => axios.get('http://localhost:3001/api/vendor/product-pdf', { responseType: 'blob' }))
           .then((res) => {
             const pdfBlob = new Blob([res.data], { type: 'application/pdf' });

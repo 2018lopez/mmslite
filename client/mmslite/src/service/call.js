@@ -251,3 +251,54 @@ export const createInvoice = async (invoice) => {
    
   }
 };
+
+export const updateInvoiceStatus = async (invoice) =>{
+ 
+
+  try {
+    const response = await axios.put('http://localhost:3001/api/admin/update-invoice', { ...invoice });
+    
+   return response;
+  } catch (error) {
+   console.log(error)
+  }
+}
+
+export const stallsInCayo = async() =>{
+
+  try {
+    const response = await axios.get(`http://localhost:3001/api/admin/stalls-cayo`)
+    return response;
+
+  }catch(e){
+
+    console.log(e)
+  }
+}
+
+
+
+export const viewStallByCode  = async (stallC) =>{
+
+  try{
+    const response = await axios.post(`http://localhost:3001/api/admin/stalls-code`, { stallCode : stallC})
+    let data = response.data[0]
+    return data;
+  }catch(e){
+
+    console.log(e)
+  }
+}
+
+
+export const createStall = async (stall) => {
+  try {
+    const response = await axios.post('http://localhost:3001/api/admin/create-stall', stall, {headers: {
+      'Content-Type': 'multipart/form-data'
+    }});
+    console.log(response)
+   return response;
+  } catch (error) {
+   
+  }
+};

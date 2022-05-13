@@ -13,6 +13,7 @@ const ReportProduct = require('../controller/reportProduct')
 const Product = require('../controller/product')
 const Market = require ('../controller/market')
 const AuthSecure = require('../tools/auth.secure')
+const fileupload = require('express-fileupload')
 
 //Begin Auth
 
@@ -46,8 +47,11 @@ router.get('/totalinquiry', Inquiry.get.totalInquiry)
 
 //Begin Stall
 
-router.get('/totalstall', Stall.get.totalStall)
-router.post('/admin/stalls', Stall.get.stallByMarket)
+router.get('/totalstall', Stall.stall.get.totalStall)
+router.get('/admin/stalls-cayo',Stall.stall.get.stallInCayo)
+router.post('/admin/stalls-code', Stall.stall.get.viewStallByCode)
+router.post('/admin/stalls', Stall.stall.get.stallByMarket)
+router.post('/admin/create-stall', fileupload(), Stall.stall.post.addStall)
 //End 
 
 //Begin Vendor
@@ -66,6 +70,7 @@ router.get('/admin/invoices', Invoice.get.invoiceList)
 router.get('/admin/invoice-pending', Invoice.get.invoicePending)
 router.post('/admin/invoices-id' ,Invoice.get.viewInvoiceByNo)
 router.post('/admin/create-invoice', Invoice.post.createInvoice)
+router.put('/admin/update-invoice', Invoice.put.updateInvoiceStatus)
 //End
 
 //Begin Vendor Reports
