@@ -50,6 +50,7 @@ import Menu from '@mui/material/Menu';
 import Grid from '@mui/material/Grid';
 import {  useNavigate  } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 
 import { dRoutes } from './dRoutes';
 
@@ -258,7 +259,7 @@ export default function MiniDrawer() {
                   justifyContent: 'center',                  
                 }}
               >
-                  {index === 0 ? <DashboardIcon/> : index === 1 ? <ShoppingCartIcon/> : index === 2 ? <StorefrontIcon/> :index === 3  ?  <InventoryIcon/> : index === 4 ? <StorefrontIcon/> : index ===5}
+                  {index === 0 ? <DashboardIcon/> : index === 1 ? <ShoppingCartIcon/> : index === 2 ? <StorefrontIcon/> :index === 3  ?  <InventoryIcon/> : index === 4 ? <EventNoteIcon/> : index ===5}
                 {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
               </ListItemIcon>
 

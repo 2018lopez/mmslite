@@ -24,7 +24,14 @@ const user ={
         async bytoken(token){
 
             return await db('select * from user where token = ?',[token], async data=>data.filter(item=>item.id))
-        }
+        },
+
+        async vendorProfileById(username){
+            // let query = 'CALL `getOrdersByID`()';
+
+            let query = 'CALL getVendorProfile(?)';            
+            return await db(query, [username], async (data) => data[0]);
+        },
     },
 
     async create($user){

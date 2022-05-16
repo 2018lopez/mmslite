@@ -157,7 +157,7 @@ export default function CreateInvoice() {
           }catch(e){
   
             setStatus('error')
-            setMsg("Failed To Create Invoice")
+            setMsg("Failed To Create Stall")
             setSnack(true)
           
           setTimeout(() => handleClose(), 3000)

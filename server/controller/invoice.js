@@ -41,6 +41,20 @@ module.exports = {
 
             let invoice = await Invoice.get.viewInvoiceByNo(req.body.invoice)
             res.send(invoice)
+        },
+
+        async totalPaidPending(req,res){
+
+            let invoice = await Invoice.get.totalPaidPending()
+            let data = JSON.stringify(invoice, (_, v) => typeof v === 'bigint' ? `${v}n` : v).replace(/"(-?\d+)n"/g, (_, a) => a)
+            res.send(data)
+
+        },
+
+        async byReservationId(req,res){
+
+            let invoice = await Invoice.get.byReservationId(req.body.username)
+            res.send(invoice)
         }
     },
 

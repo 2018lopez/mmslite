@@ -5,6 +5,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import DescriptionIcon from '@mui/icons-material/Description';
 import GroupIcon from '@mui/icons-material/Group';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import InvoiceChart from '../components/Home/HomePieChart';
 
 export default function Home() {
     const [inquiries, setInquiry] = React.useState([]);
@@ -219,7 +220,11 @@ export default function Home() {
               </Grid>
               {/* End of Stall Card */}
             </Grid>
+              <InvoiceChart/>            
           </Container>
+
+          {/* Card for Latest Invoice */}
+          
           </Box>
       </div>
     );

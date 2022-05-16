@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
-import {  updateInvoiceStatus, stallsInCayo, viewStallByCode} from '../../../../service/call';
+import {   stallsInCayo, viewStallByCode, updateStall} from '../../../../service/call';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -67,13 +67,14 @@ export default function CayoTable() {
     const[viewStalls, setViewStall] =React.useState([])
     const [openView, setOpenView] = React.useState(false);
     const [editOpen, setEditOpen] = React.useState(false)
-    const [updateStalls, setUpdateStall] = React.useState([{stall:'', status:'' }])
+    const [updateStalls, setUpdateStall] = React.useState([{stall:'', sstatus:'',fee:0}])
    const[stalls, setStall] =React.useState([])
     const[status, setStatus] = React.useState([])
     const[msg, setMsg]=React.useState([])
     const [snack, setSnack] = React.useState(false);
 
-
+    
+      
     React.useEffect(()=>{
   
         
@@ -117,39 +118,41 @@ export default function CayoTable() {
       setEditOpen(false);
       setSnack(false)
       getStall()
-      
+      setUpdateStall({stall:'', sstatus:''})
+     
     };
    
-    const updateStall = async(e) =>{
+    const updateStallData = async(e) =>{
      
-    //   let invoiceN = document.getElementById('inv').innerHTML ;
-    //   let data = {...updateInvoices, invoiceNoUpdate:invoiceN}
+      let stallid = document.getElementById('stalluid').innerHTML ;
+    let data = {...updateStalls, stall:stallid}
+    console.log(data)
       
 
     
-    //   const res = await updateInvoiceStatus(data)
+     const res = await updateStall(data)
      
-    //   try{
+      try{
 
-    //     if(res.status === 200){
-    //         setStatus('success')
-    //         setMsg(res.data.msg)
-    //         setSnack(true)
+        if(res.status === 200){
+            setStatus('success')
+            setMsg(res.data.msg)
+            setSnack(true)
           
-    //       setTimeout(() => handleCloseEdit(), 2000)
+          setTimeout(() => handleCloseEdit(), 2000)
           
 
-    //     }
-    //   }catch(e){
+        }
+      }catch(e){
 
-    //     setStatus('error')
-    //     setMsg("Failed To Update Invoice")
-    //     setSnack(true)
+        setStatus('error')
+        setMsg("Failed To Update Stall")
+        setSnack(true)
       
-    //   setTimeout(() => handleCloseEdit(), 3000)
+      setTimeout(() => handleCloseEdit(), 3000)
       
         
-    //   }
+      }
 
 
     
@@ -241,8 +244,8 @@ export default function CayoTable() {
                 <StyledTableCell align="left">{stall.fee}</StyledTableCell>
                 
                 <StyledTableCell align="left"><SeverityPill
-                    color={(stall.status === 'Avaliable' && 'success')
-                    || (stall.status === 'Unavaliable' && 'error')
+                    color={(stall.status === 'Available' && 'success')
+                    || (stall.status === 'Unavailable' && 'error')
                     || 'warning'}
                   >{stall.status}</SeverityPill></StyledTableCell>
                    <StyledTableCell align="left">{stall.description}</StyledTableCell>
@@ -304,8 +307,8 @@ export default function CayoTable() {
                       </Typography>
                       <Typography display="inline" variant="subtitle1" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
                            <SeverityPill
-                              color={(viewStalls.status === 'Avaliable' && 'success')
-                              || (viewStalls.status === 'Unavaliable' && 'error')
+                              color={(viewStalls.status === 'Available' && 'success')
+                              || (viewStalls.status === 'Unavailable' && 'error')
                               || 'warning'}
                             >{viewStalls.status}</SeverityPill>
                       </Typography>
@@ -443,10 +446,10 @@ export default function CayoTable() {
                     >
                        <Grid item>
                        <Typography display="inline"variant="h6" gutterBottom component="div">
-                      Stall Name
+                      Stall Name: 
                       </Typography>
-                      <Typography display="inline" variant="subtitle1" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
-                          -   {viewStalls.stall}
+                      <Typography id="stalluid" display="inline" variant="subtitle1" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
+                        {viewStalls.stall}
                       </Typography>
                       
                        </Grid>
@@ -462,14 +465,28 @@ export default function CayoTable() {
                        <Typography display="inline"variant="h6" gutterBottom component="div">
                        Status:
                       </Typography>
-                      <Typography display="inline" variant="subtitle1" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
-                           <SeverityPill
-                              color={(viewStalls.status === 'Avaliable' && 'success')
-                              || (viewStalls.status === 'Unavaliable' && 'error')
-                              || 'warning'}
-                            >{viewStalls.status}</SeverityPill>
-                      </Typography>
-                      
+                     
+                      <TextField
+                       key={viewStalls.status}
+                       label="Update Status"
+                       name="sstatus"
+                      defaultValue={viewStalls.status}
+                       required
+                       select
+                       SelectProps={{ native: true}}
+                      value={updateStalls.fee}
+                       onChange={handleEditChange}
+                       variant="outlined"
+                     
+                   >
+                        <option value="Available">
+                           Available
+                        </option>
+                        <option value="Unavailable">
+                          Unavailable
+                        </option >
+    
+                   </TextField>
                        </Grid>
                      
                      
@@ -483,9 +500,18 @@ export default function CayoTable() {
                        <Typography display="inline"variant="h6" gutterBottom component="div">
                        Fee:
                       </Typography>
-                      <Typography display="inline" variant="subtitle1" gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
-                       ${viewStalls.fee}
-                      </Typography>
+                    
+                      <TextField
+                        fullWidth
+                        label="Rental Fee"
+                        name="fee"
+                        key={viewStalls.fee}
+                        onChange={handleEditChange}
+                        type="number"
+                       defaultValue={viewStalls.fee}
+                        value={updateStalls.fee}
+                        variant="outlined"
+                    />
                       
                        </Grid>
                      
@@ -546,7 +572,7 @@ export default function CayoTable() {
                 <Button
                     color="warning"
                     variant="contained"
-                   
+                   onClick={updateStallData}
                 >
                     Update 
                 </Button>
@@ -563,6 +589,9 @@ export default function CayoTable() {
         </DialogContent>
         
       </Dialog>
+      <Snackbar open={snack}>
+        <  Alert severity={status}>{msg}</Alert>
+      </Snackbar>
       
       </div>
     );

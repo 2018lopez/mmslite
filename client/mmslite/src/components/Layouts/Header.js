@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import {Link} from 'react-router-dom'
-const pages = ['Explore-Market', 'AboutUs', 'Be-Vendor', 'Contact', 'Login', 'SignUp'];
+const pages = ['Home','Explore-Market', 'AboutUs', 'Be-Vendor', 'Contact', 'Login', 'SignUp'];
 
 
 const ResponsiveAppBar = () => {
@@ -82,7 +82,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            MMS-Lite
+           MMS-Lite
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

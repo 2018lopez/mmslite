@@ -6,6 +6,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CreateStall from './CreateStall'
 import CayoTable from './CayoTable'
+import CorozalTable from './CorozalTable'
+import OrangeTable from './OrangeTable'
+import BelizeTable from './BelizeTable'
+import StannTable from './StannTable'
+import ToledoTable from './ToledoTable'
 import Grid from '@mui/material/Grid';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -65,22 +70,22 @@ export default function BasicTabs() {
             </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-            Corozal
+           <CorozalTable/>
         </TabPanel>
         <TabPanel value={value} index={1}>
-           Orange Walk
+          <OrangeTable/>
         </TabPanel>
         <TabPanel value={value} index={2}>
-            Belize
+           <BelizeTable/>
         </TabPanel>
         <TabPanel value={value} index={3}>
            <CayoTable/>
         </TabPanel>
         <TabPanel value={value} index={4}>
-            Stann Creek
+           <StannTable/>
         </TabPanel>
         <TabPanel value={value} index={5}>
-           Toledo
+           <ToledoTable/>
         </TabPanel>
         
         </Box>

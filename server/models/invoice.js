@@ -47,7 +47,17 @@ const invoice ={
 
             let query = 'call sp_viewInvoiceByInvoiceNo(?)'
             return await db(query,[invoice], async data=>data[0])
-         }
+         },
+
+         async totalPaidPending(){
+            let query = ' select * from totalpaidpending_view'
+            return await db(query,0, async data =>data)
+         },
+
+         async byReservationId(username){            
+            let query = 'CALL getInvoiceByReservationId(?)';            
+            return await db(query, [username], async (data) => data[0]);
+        }
 
        
     },

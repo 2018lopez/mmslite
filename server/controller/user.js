@@ -4,7 +4,15 @@ const validate = require('../lib/validatePwd')
 
 module.exports ={
 
-    get:{},
+    get:{
+
+        async profileById(req, res){
+            console.log(req.body)
+            let setting = await User.get.vendorProfileById(req.body.username)
+            res.send(setting)
+        }
+
+    },
     post:{
         async create(req,res){
             let user ={}

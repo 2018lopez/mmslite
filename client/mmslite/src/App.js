@@ -9,6 +9,8 @@ import Login from './components/customer/Login'
 import Admin from './components/management/views/admin'
 import Vendor from './components/vendor/VendorPage'
 import SignUp from './components/customer/SignUp'
+import ProductListing from './components/customer/ProductListing'
+import ProductDetails from './components/customer/comp/ProductDetails'
 import {Routes, Route} from 'react-router-dom'
 import axios from 'axios'
 import React,{  Component } from 'react';
@@ -34,6 +36,8 @@ export default class App extends Component {
             <Route path="Contact" element={<Contact />}/>
             <Route path="Login" element={<Login />}/>
             <Route path="SignUp" element={<SignUp />}/>
+            <Route path="Products" element={<ProductListing />}/>
+            <Route path='/product/:id' element={<ProductDetails/>} />
             <Route path="vendor/*" element={<Vendor />}/>
       
             

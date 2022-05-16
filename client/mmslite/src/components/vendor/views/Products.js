@@ -1,141 +1,425 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddIcon from '@mui/icons-material/Add';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Dialog from '@mui/material/Dialog';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Title from '../components/Title';
-const options = [
-  'Vegetables',
-  'Clothing',
-  'Food',
-  'Meat',  
-];
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import {TextField, Paper } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import {  createProduct } from '../../../service/call';
+//retrieved after vendor login
+let reservationId = 1;
+let add;
 
-function ConfirmationDialogRaw(props) {
-  const { onClose, value: valueProp, open, ...other } = props;
-  const [value, setValue] = React.useState(valueProp);
-  const radioGroupRef = React.useRef(null);
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
-  React.useEffect(() => {
-    if (!open) {
-      setValue(valueProp);
+const Input = styled('input')({
+  display: 'none',
+});
+
+export default function Product() {
+  const [products, setProduct] = React.useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openSuccess, setOpenSuccess] = React.useState(false)
+  const [openWarning, setOpenWarning] = React.useState(false);
+  const [id, setId] = React.useState('');
+  const [code, setCode] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [status, setStatus] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [currentId, setCurrentId] = React.useState('');
+  const [productImg, setProductImg] = React.useState({ image:''});
+  const [productlists, setProductList] = React.useState([])
+  React.useEffect(()=>{
+    getProducts();    
+  }, []);
+
+  const getProducts = async () => {
+    let username = localStorage.getItem('username')
+    const res = await axios.post(`http://localhost:3001/api/vendor/product-vendor`, {username: username});
+    setProduct(res.data)
+    console.log(res.data)
+    setName(res.data[0].name)
+    setPrice(res.data[0].price)
+    setDescription(res.data[0].description)
+ 
+  }
+
+  const handleChange = async (event) => {
+      
+        
+        
+        
+    
+
+        setProductImg({ ...productImg, image: event.target.files[0]})
+
+     
+         
+
+
+  }
+
+  const handleSave = async() => {  
+
+      let username = localStorage.getItem('username')
+    const formData = new FormData();
+    formData.append('image', productImg.image)
+    formData.append('username',username )
+    formData.append('pCode', code)
+    formData.append('pName', name)
+    formData.append('image', productImg)
+    formData.append('pStatus', status)
+    formData.append('price', price)
+    formData.append('details', description)
+
+    const res = await createProduct(formData);
+
+    console.log(formData, productImg, status)
+
+    if(code === '' || name === '' || price === ''){
+      setOpenWarning(true)
     }
-  }, [valueProp, open]);
 
-  const handleEntering = () => {
-    if (radioGroupRef.current != null) {
-      radioGroupRef.current.focus();
+    try{
+      if( res.status === 200){
+        setOpenSuccess(true);
+        setOpen(false)
+        
+      }
+    }catch(e){
+        
+      
+   
+      setOpen(false);        
+    
     }
   };
 
   const handleCancel = () => {
-    onClose();
+    setOpen(false)
+    setId('');
+    setCode('');
+    setName('');
+    setPrice('');
+    setStatus('');
+    setDescription('');
+    // setAdd(true)
   };
 
-  const handleOk = () => {
-    onClose(value);
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccess(false);
+    setOpenWarning(false)
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const openMenu = Boolean(anchorEl);
+
+  const handleClickMenu = (event, id) => {
+    setAnchorEl(event.currentTarget);
+    setCurrentId(id)
+    if(add){
+      add=false
+    }
+    products.map(p =>{
+      if(p.id === id){
+        setId(p.id);
+        
+        setCode(p.code)
+        setName(p.name);
+        console.log(p.name+'menu')
+        if(p.price !== null){
+          setPrice(p.price);
+        }
+        if(p.status !== null){
+          setStatus(p.status)
+        }
+        if(p.description !== null){
+          setDescription(p.description)
+          console.log(p.description)
+        }        
+      }
+      return ''
+    })    
+  };
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+   
   };
 
-  return (
-    <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-      maxWidth="xs"
-      TransitionProps={{ onEntering: handleEntering }}
-      open={open}
-      {...other}
-    >
-      <DialogTitle>Phone Ringtone</DialogTitle>
-      <DialogContent dividers>
-        <RadioGroup
-          ref={radioGroupRef}
-          aria-label="ringtone"
-          name="ringtone"
-          value={value}
-          onChange={handleChange}
-        >
-          {options.map((option) => (
-            <FormControlLabel
-              value={option}
-              key={option}
-              control={<Radio />}
-              label={option}
-            />
-          ))}
-        </RadioGroup>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleCancel}>
-          Cancel
-        </Button>
-        <Button onClick={handleOk}>Ok</Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
+  const handleClickAdd = () => {
+    add = true;    
+    setId('');
+    setCode('');
+    setName('');
+    setPrice('');
+    setStatus('');
+    setDescription('');
+    setOpen(true);
+  }
 
-ConfirmationDialogRaw.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
-};
-
-export default function ConfirmationDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('Category');
-
-  const handleClickListItem = () => {
+  const handleClickMenuEdit = () => {
+    handleCloseMenu();    
     setOpen(true);
   };
 
-  const handleClose = (newValue) => {
-    setOpen(false);
-
-    if (newValue) {
-      setValue(newValue);
-    }
+  const handleClickName=(id)=>{
+    products.map(p => {
+      if(p.id===id){
+        setCurrentId(p.id);
+        setName(p.name);
+        setPrice(p.price);
+        setDescription(p.description);
+      }
+      return '';
+    })
   };
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      <Title>Products</Title>
-      <List component="div" role="group">
-        <ListItem button divider disabled>
-          <ListItemText primary="Services" />
-        </ListItem>
-        <ListItem
-          button
-          divider
-          aria-haspopup="true"
-          aria-controls="ringtone-menu"
-          aria-label="phone ringtone"
-          onClick={handleClickListItem}
-        >
-          <ListItemText primary="Product Name" secondary={value} />
-        </ListItem>
-        <ListItem button divider disabled>
-          <ListItemText primary="Product 2" secondary="Meat" />
-        </ListItem>
-        <ConfirmationDialogRaw
-          id="ringtone-menu"
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          value={value}
-        />
-      </List>
+    <React.Fragment>      
+    <Box sx={{  maxWidth: '50%', height: '90vh' }}>
+      <Grid  container spacing={2} sx={{height: '100%', flexWrap: 'nowrap'}}>
+        
+        <Grid item lg={6}>
+        <Paper sx={{padding: '0 3% 0 3%', height:'100%' }}>
+          <List>
+            <ListItem>
+            <ListItemText primary="Products"/>
+            <IconButton 
+              color="primary" 
+              aria-label="add" 
+              onClick={handleClickAdd}
+            >
+              <AddIcon/>
+            </IconButton>
+            </ListItem>
+          </List>
+            <List component="div" role="group">
+              {products.map(r =>(                 
+              <ListItem
+                sx={{bgcolor: '#e0e0e0', borderRadius: 2, padding: 0, mb: '2%'}}                
+                key={r.id}
+                // aria-haspopup="true"                               
+                secondaryAction={
+                  <IconButton
+                    aria-label="more"
+                    id="long-button"
+                    edge='end'                    
+                    size='small'
+                    sx={{ borderRadius: 2, padding: '50% 30%'}}
+                    aria-controls={openMenu ? 'basic-menu' : undefined}
+                    aria-expanded={openMenu ? 'true' : undefined}
+                    aria-haspopup="true"
+                    onClick={(e)=>handleClickMenu(e, r.id) }
+                  >
+                    <MoreVertIcon/>                    
+                  </IconButton>                   
+                }
+              >        
+                 
+                <ListItemButton>
+                <Menu
+                
+                  id="basic-menu"                  
+                  MenuListProps={{
+                    'aria-labelledby': 'long-button',
+                  }}
+                  anchorEl={anchorEl}
+                  open={openMenu}
+                  onClose={handleCloseMenu}                  
+                >
+                  <MenuItem onClick={() => handleClickMenuEdit()}>Edit</MenuItem>
+                  <MenuItem onClick={handleCloseMenu}>Delete</MenuItem>
+                </Menu>  
+                <ListItemText 
+                  primary={r.name}  
+                  onClick={()=>handleClickName(r.id)}
+                /> 
+                 
+                </ListItemButton>                
+              </ListItem> 
+              ))}       
+            </List>
+          </Paper>
+        </Grid>        
+        <Grid item lg={6}>
+          <Paper sx={{width: '100%', height:'100%', bgcolor: 'white' }}>
+            <List>
+              <ListItem>
+              <ListItemText primary="Product Details"/>              
+              </ListItem>
+            </List>
+            <Grid alignItems={'center'}  container sx={{ flexWrap: 'nowrap'}}>
+              <Grid  item xs={5} md={5} lg={5} pl={1}>
+                <List >
+                  <ListItem >
+                <img 
+                  width={50}
+                  height={45} 
+                  alt= 'img' 
+                  src="http://localhost:3001/${products.img}"
+                />
+                </ListItem>
+                </List>
+              </Grid>
+              <Grid item xs={7} md={7} lg={7}>
+                <List >                  
+                    <div style={{textAlign: 'left', }}>{name} </div>                 
+                    <div style={{textAlign: 'left', color: '#2196f3' }}>${price}</div>                  
+                    <div style={{textAlign: 'left', fontSize: '80%', color: 'grey'}}>{description} </div>                  
+                </List>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>  
+      </Grid>           
     </Box>
+
+    <Dialog
+      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+      maxWidth="xs"      
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{add?'Add Product':'Edit Product'}</DialogTitle>
+      <DialogContent dividers id='alert-dialog-description'>
+        <Grid  container spacing={2}>
+         
+          <Grid item xs={12} sm={6} md={6} lg={6}> 
+            <InputLabel sx={{fontSize: '70%'}} align='left' htmlFor='co-input' >
+              CODE*
+            </InputLabel>       
+              <TextField 
+                id='co-input'
+                fullWidth 
+                // disabled
+                // focused
+                size='small' 
+                placeholder='Enter code'        
+                onChange={(e) => setCode(e.target.value)}           
+                value = {code}          
+              />     
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6}> 
+            <InputLabel sx={{fontSize: '70%'}} align='left' htmlFor='pn-input' >
+              PRODUCT NAME*
+            </InputLabel>       
+              <TextField 
+                id='pn-input'
+                fullWidth 
+                // disabled
+                // focused
+                size='small'
+                placeholder='Enter product name'         
+                onChange={(e) => setName(e.target.value)}           
+                value = {name}         
+              />     
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6}> 
+            <InputLabel sx={{fontSize: '70%'}} align='left' htmlFor='pr-input' >
+              PRICE*
+            </InputLabel>       
+              <TextField 
+                id='pr-input'
+                fullWidth 
+                // disabled
+                // focused
+                size='small'
+                placeholder='Enter product price'         
+                onChange={(e) => setPrice(e.target.value)}           
+                value = {price}         
+              />     
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={6}> 
+            <InputLabel sx={{fontSize: '70%'}} align='left' htmlFor='st-input' >
+              STATUS
+            </InputLabel>       
+              <TextField 
+                id='st-input'
+                fullWidth 
+                // disabled
+                // focused
+                size='small'
+                placeholder='Enter status'         
+                onChange={(e) => setStatus(e.target.value)}           
+                value = {status}           
+              />     
+          </Grid>
+          <Grid item xs={12} sm={6} md={8} lg={8}>
+          <InputLabel sx={{fontSize: '70%'}} align='left' htmlFor='st-input' >
+              Product Image
+            </InputLabel>  
+          <TextField
+                        fullWidth
+                        
+                        name="image"
+                        onChange={handleChange}
+                        type="file"
+                    
+                        variant="outlined"
+                    />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} lg={12}> 
+            <InputLabel sx={{fontSize: '70%'}} align='left' htmlFor='dc-input' >
+              DESCRIPTION (Max 100 characters)
+            </InputLabel>       
+              <TextField 
+                id='dc-input'
+                fullWidth 
+                // disabled
+                // focused
+                placeholder='Enter description'
+                size='small'         
+                onChange={(e) => setDescription(e.target.value)}           
+                value = {description}          
+              />     
+          </Grid>
+        </Grid>
+      </DialogContent>
+      <DialogActions>
+        <Button autoFocus variant='outlined' onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button variant='contained' onClick={handleSave}>Save</Button>
+      </DialogActions>
+       
+    </Dialog>
+    <Snackbar open={openSuccess} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Product is successfully saved!
+        </Alert>
+      </Snackbar>   
+      <Snackbar open={openWarning} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
+          Fields names with * cannot be empty!
+        </Alert>
+      </Snackbar>
+    </React.Fragment>
   );
 }
