@@ -4,6 +4,13 @@ const stall ={
 
     get:{
 
+      async stallByName(){
+
+        let query = 'select code_name from stall'
+        return await db(query,0, async data=>data)
+
+      },
+
       async totalStall(){
 
         let query = 'select * from totalstall_view'
@@ -88,8 +95,8 @@ const stall ={
     put:{
 
       async updateStall($stall){
-        let query = 'call sp_updateStall(?, ?,?)'
-       return await db(query,[$stall.stallName, $stall.stallStatus, $stall.stallFee],async (data)=>data[0])
+        let query = 'call sp_updateStall(?, ?)'
+       return await db(query,[$stall.stallName, $stall.stallStatus],async (data)=>data[0])
       }
     }
 

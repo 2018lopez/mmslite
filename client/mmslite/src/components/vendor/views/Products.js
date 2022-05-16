@@ -52,6 +52,7 @@ export default function Product() {
   const [currentId, setCurrentId] = React.useState('');
   const [productImg, setProductImg] = React.useState({ image:''});
   const [productlists, setProductList] = React.useState([])
+  const [pImg, setPImg]=React.useState([])
   React.useEffect(()=>{
     getProducts();    
   }, []);
@@ -60,10 +61,12 @@ export default function Product() {
     let username = localStorage.getItem('username')
     const res = await axios.post(`http://localhost:3001/api/vendor/product-vendor`, {username: username});
     setProduct(res.data)
-    console.log(res.data)
-    setName(res.data[0].name)
+    
+    setName(res.data[0].product)
     setPrice(res.data[0].price)
-    setDescription(res.data[0].description)
+    setDescription(res.data[0].detail)
+    setStatus(res.data[0].status)
+    setCode(res.data[0].code)
  
   }
 
@@ -150,18 +153,19 @@ export default function Product() {
         setId(p.id);
         
         setCode(p.code)
-        setName(p.name);
-        console.log(p.name+'menu')
+        setName(p.product);
+        console.log(p.product+'menu')
         if(p.price !== null){
           setPrice(p.price);
         }
         if(p.status !== null){
           setStatus(p.status)
         }
-        if(p.description !== null){
-          setDescription(p.description)
-          console.log(p.description)
-        }        
+        if(p.detail !== null){
+          setDescription(p.detail)
+          console.log(p.detail)
+        }     
+        setPImg(p.image)   
       }
       return ''
     })    
@@ -191,9 +195,10 @@ export default function Product() {
     products.map(p => {
       if(p.id===id){
         setCurrentId(p.id);
-        setName(p.name);
+        setName(p.product);
         setPrice(p.price);
-        setDescription(p.description);
+        setDescription(p.detail);
+        setPImg(p.image)
       }
       return '';
     })
@@ -256,7 +261,7 @@ export default function Product() {
                   <MenuItem onClick={handleCloseMenu}>Delete</MenuItem>
                 </Menu>  
                 <ListItemText 
-                  primary={r.name}  
+                  primary={r.product}  
                   onClick={()=>handleClickName(r.id)}
                 /> 
                  
@@ -281,7 +286,7 @@ export default function Product() {
                   width={50}
                   height={45} 
                   alt= 'img' 
-                  src="http://localhost:3001/${products.img}"
+                  src={`http://localhost:3001/${pImg}`}
                 />
                 </ListItem>
                 </List>

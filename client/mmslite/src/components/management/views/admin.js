@@ -34,7 +34,7 @@ import {Link} from 'react-router-dom'
 import {routes}  from './routes'
 
 
-const viewsMain = ['Home', 'Vendors', 'Stall', 'Invoices'];
+const viewsMain = ['Home',  'Stall', 'Invoices'];
 const viewsLower = ['Inquiry', ];
 
 const drawerWidth = 240;
@@ -233,7 +233,7 @@ const Admin = () =>{
                   justifyContent: 'center',                  
                 }}
               >
-                  {index === 0 ? <DashboardIcon/> : index === 1 ? <GroupIcon/> : index === 2 ? <StorefrontIcon/> : <InventoryIcon/>}
+                  {index === 0 ? <DashboardIcon/> :  index === 1 ? <StorefrontIcon/> : <InventoryIcon/>}
                 {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
               </ListItemIcon>
 

@@ -28,8 +28,8 @@ export default class App extends Component {
     
           <Routes>
         
-        
-            <Route exact path='/' element={<Main/>}/>
+          <Route exact path='/' element={<Main/>}/>
+            <Route exact path='/Home' element={<Main/>}/>
             <Route path='Explore-Market' element={<ExploreMarket/>}/>
             <Route path="AboutUS" element={<About />}/>
             <Route path="Be-Vendor" element={<BeVendor />}/>

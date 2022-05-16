@@ -13,6 +13,12 @@ const product ={
 
             let query = 'call sp_viewProductByVendor(?)'
             return await db(query,[username], async data =>data[0])
+        },
+
+        async productByStall(stall){
+
+            let query = 'call sp_getProductByStall(?)'
+            return await db(query,[stall], async data =>data[0])
         }
 
         

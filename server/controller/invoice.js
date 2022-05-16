@@ -74,7 +74,7 @@ module.exports = {
                 invoice.other = parseInt(req.body.other)
                 try{
                     console.log(invoice)
-                    // let data = Invoice.post.createInvoice(invoice)
+                    let data = Invoice.post.createInvoice(invoice)
                   res.json({msg: "Successfully Created Invoice"})
 
             }catch(e){

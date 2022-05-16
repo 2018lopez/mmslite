@@ -10,7 +10,7 @@ const Main = ()=>{
 
       <div>
         <Header/>
-          <div>Route</div>
+          <h1>Home</h1>
           <Box sx={{flexGrow: 1,py: 8 }}>
           <Container maxWidth={false}> 
             <Grid container spacing={4}>
@@ -43,7 +43,7 @@ const Main = ()=>{
                             variant="subtitle"
                           
                           >
-                          Explore the Market
+                        Improve productivity and management of all marketstakeholders by using MMSLite.
                           </Typography>
                         </Grid>
                         

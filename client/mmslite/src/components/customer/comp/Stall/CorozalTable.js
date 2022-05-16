@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import EditIcon from '@mui/icons-material/Edit';
-import {   stallsInCayo, viewStallByCode, updateStall} from '../../../../service/call';
+import {    stallsInCorozal, viewStallByCode, updateStall} from '../../../../service/call';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -67,7 +67,7 @@ export default function CayoTable() {
     const[viewStalls, setViewStall] =React.useState([])
     const [openView, setOpenView] = React.useState(false);
     const [editOpen, setEditOpen] = React.useState(false)
-    const [updateStalls, setUpdateStall] = React.useState([{stall:'', sstatus:''}])
+    const [updateStalls, setUpdateStall] = React.useState([{stall:'', sstatus:'',fee:0}])
    const[stalls, setStall] =React.useState([])
     const[status, setStatus] = React.useState([])
     const[msg, setMsg]=React.useState([])
@@ -86,7 +86,7 @@ export default function CayoTable() {
      
 
      const getStall = async () =>{
-        const res = await stallsInCayo()
+        const res = await stallsInCorozal()
       
         setStall(res.data)
      }
@@ -249,7 +249,7 @@ export default function CayoTable() {
                     || 'warning'}
                   >{stall.status}</SeverityPill></StyledTableCell>
                    <StyledTableCell align="left">{stall.description}</StyledTableCell>
-                <StyledTableCell align="left"> <Button spacing="2" color="info" variant="contained" onClick={()=>editStall(stall.Stall)}><EditIcon/></Button><Button color="warning" variant="contained" onClick={() => viewStall(stall.Stall)}><PreviewIcon/></Button>
+                <StyledTableCell align="left"> <Button color="warning" variant="contained" onClick={() => viewStall(stall.Stall)}><PreviewIcon/></Button>
  </StyledTableCell>
                 
                 </StyledTableRow>
@@ -474,7 +474,7 @@ export default function CayoTable() {
                        required
                        select
                        SelectProps={{ native: true}}
-                      value={updateStalls.sstatus}
+                      value={updateStalls.fee}
                        onChange={handleEditChange}
                        variant="outlined"
                      
@@ -498,10 +498,10 @@ export default function CayoTable() {
                     >
                        <Grid item>
                        <Typography display="inline"variant="h6" gutterBottom component="div">
-                       Fee: ${viewStalls.fee}
+                       Fee:
                       </Typography>
                     
-                      {/* <TextField
+                      <TextField
                         fullWidth
                         label="Rental Fee"
                         name="fee"
@@ -511,7 +511,7 @@ export default function CayoTable() {
                        defaultValue={viewStalls.fee}
                         value={updateStalls.fee}
                         variant="outlined"
-                    /> */}
+                    />
                       
                        </Grid>
                      

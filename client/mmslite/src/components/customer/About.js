@@ -36,14 +36,11 @@ const About = ()=>{
                         <Typography variant="h3" sx={{ my: 5 }}>
                             MMS-Lite
                         </Typography>
-                        <Typography variant="h5">
+                        <Typography variant="subtitle">
                             {
-                            'From the latest trendy boutique hotel to the iconic palace with XXL pool'
-                            }
+                            'Belize first market management software that can easily manage stall reservation, provide market routes, generate vendor monthly bill, and facilitate inquiries.'}
 
-                            {
-                            ', go for a mini-vacation just a few subway stops away from your home.'
-                            }
+                            
                         </Typography>
                         </Box>
                     </Grid>
@@ -51,14 +48,13 @@ const About = ()=>{
                         <Box sx={item}>
                         <InfoIcon sx={{ fontSize: 40 }} color='success'/>
                         <Typography variant="h3" sx={{ my: 5 }}>
-                            Goal
+                           Stand For
                         </Typography>
-                        <Typography variant="h5">
+                        <Typography variant="subtitle">
                             {
-                            'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '
+                            'Efficient management of local markets and market stakeholders '
                             }
 
-                            {'your Sundays will not be alike.'}
                         </Typography>
                         </Box>
                     </Grid>
@@ -66,11 +62,11 @@ const About = ()=>{
                         <Box sx={item}>
                         <DataUsageIcon sx={{ fontSize: 40 }} color='success'/>
                         <Typography variant="h3" sx={{ my: 5 }}>
-                            Mission
+                            Goal
                         </Typography>
-                        <Typography variant="h5">
-                            {'By registering, you will access specially negotiated rates '}
-                            {'that you will not find anywhere else.'}
+                        <Typography variant="subitle">
+                            {'Provides opportunities for local vendors to increase sales. '}
+                            
                         </Typography>
                         </Box>
                     </Grid>

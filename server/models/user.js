@@ -71,7 +71,12 @@ const user ={
         }
     },
 
+    async updateProfile($profile){
 
+        let query = 'UPDATE `user` SET `tel` = ?, `username` = ? where id = ?;'
+        await db(query,[$profile.tel, $profile.uName, $profile.id], data=>data)
+    },
+    
 
 }
 

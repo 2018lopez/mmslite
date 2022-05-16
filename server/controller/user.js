@@ -7,7 +7,7 @@ module.exports ={
     get:{
 
         async profileById(req, res){
-            console.log(req.body)
+           
             let setting = await User.get.vendorProfileById(req.body.username)
             res.send(setting)
         }
@@ -57,6 +57,17 @@ module.exports ={
             let user ={username: req.body.resetusername, password: req.body.resetpassword}
             let data = await User.editPassword(user)
             res.json(data)
+        },
+
+        async updateSetting(req, res){
+            let data = {id: req.body.id, tel: req.body.tel, uName: req.body.username,  }
+            try{
+                await User.updateProfile(data)
+                // res.json({'details':'ok', message:'Product updated!!'})
+            }catch(e){
+                res.json({'details':'error', message: 'An Error has occur while updating vendor'})
+            }
+    
         }
     }
 }

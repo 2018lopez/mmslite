@@ -14,6 +14,13 @@ module.exports = {
 
             let product = await Product.get.vendorProduct(req.body.username)
             res.send(product)
+        },
+
+        async productByStall(req,res){
+            
+            let product = await Product.get.productByStall(req.body.stall)
+            res.send(product)
+
         }
 
      

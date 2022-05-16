@@ -27,6 +27,7 @@ router.post('/user-login', Auth.post.login)
 router.post('/user', User.post.create)
 router.put('/edit-password',User.put.editPassword)
 router.post('/vendor/profile', User.get.profileById)
+router.put('/vendor/update-setting', User.put.updateSetting)
 //User End
 
 //Begin Role
@@ -49,6 +50,7 @@ router.post('/vendor/create-inquiry', Inquiry.post.newInquiry)
 
 //Begin Stall
 router.get('/customer/stalls', Stall.stall.get.stallView)
+router.post('/customer/product-stall', Product.get.productByStall)
 router.get('/customer/stall-category', Stall.stall.get.stallCategory)
 router.get('/totalstall', Stall.stall.get.totalStall)
 router.get('/admin/stalls-cayo',Stall.stall.get.stallInCayo)
@@ -58,9 +60,11 @@ router.get('/admin/stalls-belize', Stall.stall.get.stallInBelize)
 router.get('/admin/stalls-stann', Stall.stall.get.stallInStann)
 router.get('/admin/stalls-toledo', Stall.stall.get.stallInToledo)
 router.post('/admin/stalls-code', Stall.stall.get.viewStallByCode)
-router.post('/admin/stalls', Stall.stall.get.stallByMarket)
+router.get('/admin/stalls', Stall.stall.get.byStallName)
+// router.post('/admin/stalls', Stall.stall.get.stallByMarket)
 router.post('/admin/create-stall', fileupload(), Stall.stall.post.addStall)
 router.put('/admin/update-stall', Stall.stall.put.updateStall)
+
 //End 
 
 //Begin Vendor
@@ -117,6 +121,7 @@ router.put('/vendor/update-order', Order.put.updateOrder)
 router.post('/vendor/bill-end', Reservation.get.endStatusById)
 router.put('/vendor/update-reserve-date', Reservation.put.updateEnd)
 router.post('/vendor/stall-reserve', Reservation.get.reservationDetails)
+router.put('/vendor/update-reserve', Reservation.put.updateDetails)
 //
 
 

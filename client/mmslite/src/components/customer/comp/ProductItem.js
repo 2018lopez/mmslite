@@ -6,8 +6,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 
-const Item = ({ id, title, price }) => {
-  const imgPath = `http://localhost:3001/uploads/marketView.png`;
+const Item = ({ id, name, price, image }) => {
+  const imgPath = `http://localhost:3001/${image}`;
   const navigate = useNavigate();
   const handleNavigation = () => navigate(`/product/${id}`);
 
@@ -23,7 +23,7 @@ const Item = ({ id, title, price }) => {
         />
         <CardContent>
           <Typography variant='body2' color='text.secondary' noWrap>
-            {title}
+            {name}
           </Typography>
         </CardContent>
       </CardActionArea>

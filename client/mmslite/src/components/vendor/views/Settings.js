@@ -21,7 +21,7 @@ export default function Settings() {
   const [telValue, setTelValue] = useState("");
   const [usernameValue, setUsernameValue] = useState("");
   const [open, setOpen] = useState(false);
-
+  const [userId, setUserId] = useState([])
   useEffect(()=>{
     getVendorDetails() 
    
@@ -30,16 +30,16 @@ export default function Settings() {
   const getVendorDetails = async () => {
     let username= localStorage.getItem('username')
     const res = await axios.post('http://localhost:3001/api/vendor/profile', {username: username});    
-    console.log(res.data)
     setVendorProfile(res.data)    
     setTelValue(res.data[0].tel)
-    setUsernameValue(res.data[0].username)    
+    setUsernameValue(res.data[0].username)  
+    setUserId(res.data[0].id)  
   }
   
   const handleSave = async() => {
     setOpen(true);
-    // await axios.put(`http://localhost:3001/api/vendor/update/profile/by-ve-id/${vendorId}`, 
-    // {tel: telValue, username: usernameValue});        
+    await axios.put(`http://localhost:3001/api/vendor/update-setting`, 
+    {id: userId, tel: telValue, username: usernameValue});        
   };
   const handleReset = () => {
     setTelValue("");
@@ -213,24 +213,7 @@ export default function Settings() {
           />     
         </Grid>
                 
-        <Grid item align='left'  xs={12} sm={6} md={4} lg={3} >
-          {/* <Stack >             */}
-          <InputLabel sx={{fontSize: '70%'}} align='left'>
-            PROFILE PICTURE
-          </InputLabel>           
-          {/* </Stack> */}
-          <Stack spacing={3} direction={'row'}>            
-            <div><Avatar  alt="Vendor Name" src="" /> </div>
-            <div style={{padding: '2% 0 0 0'}}>
-              <label htmlFor="contained-button-file">
-                <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                <Button size='small' variant="outlined" component='span' >
-                  Browse
-                </Button>
-              </label>             
-            </div>          
-          </Stack>
-        </Grid>
+        
         <Grid item xs={12} sm={6} md={4} lg={3} >
           {/* <Stack >             */}
             <InputLabel sx={{fontSize: '70%'}} align='left'>
@@ -239,7 +222,7 @@ export default function Settings() {
           {/* </Stack> */}
           <Stack direction={'row'}>            
             <div >
-              {row.status === 'A' ? 
+              {row.status === '1' ? 
               <ToggleOnIcon style={{fontSize: '45', color: '#2196f3' }}/>:'' 
               }
             </div>          

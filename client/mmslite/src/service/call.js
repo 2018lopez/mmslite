@@ -209,7 +209,7 @@ export const getMarkets = async() => {
 export const stalls  = async (stallName) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/admin/stalls`, { stall : stallName})
+    const response = await axios.get(`http://localhost:3001/api/admin/stalls`)
    
     return response;
   }catch(e){

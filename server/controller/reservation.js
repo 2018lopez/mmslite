@@ -29,6 +29,22 @@ module.exports = {
             let reservation = await Reservation.put.updateEnd(data)
             res.send(reservation)
             
+        },
+
+        async updateDetails(req, res){
+            let data = {id: req.body.id, bName: req.body.bName, bTel: req.body.bTel, 
+                email: req.body.email, fb: req.body.fb, 
+                ig: req.body.ig, des: req.body.des }  
+            
+            try{
+                await Reservation.put.updateDetails(data);
+            }catch(e){
+                res.json({'stall reservation': 'error', message: 'Error in updating stall table'})
+            }
+            
+            
         }
+
+        
     }
 }

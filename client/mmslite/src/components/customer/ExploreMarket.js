@@ -96,6 +96,8 @@ const ExploreMarket = ()=>{
     });
 
     const districtSelect = watch('district')
+    const marketSelect = watch('market')
+    const categorySelect = watch('category')
 
     React.useEffect(()=>{
 
@@ -162,10 +164,25 @@ const ExploreMarket = ()=>{
                 return row.district.toLowerCase().includes(datav.name.toLowerCase());
             });
             setStalls(filteredRows);
-            console.log(districtSelect, filteredRows)
+          
             
 
         }
+        const setMarketFilter =  () =>{
+
+          let datav = districtSelect
+          // const filteredRows = markets.filter((row) => {
+          
+          //     return row.market.toLowerCase().includes(datav.name.toLowerCase());
+          // });
+          // setStalls(filteredRows);
+
+          console.log(datav)
+
+        }
+
+        
+
         const cancelFilter = () =>{
             stallView()
           
@@ -184,7 +201,7 @@ const ExploreMarket = ()=>{
             <Header/>
             <Box margin={5}>
              <h1>Explore Market</h1>
-             <img src={'http://localhost:3001/uploads/marketView.png'} height="200" width={"700"}/>
+            
              <Box
         sx={{ display: 'flex', p: 1, bgcolor: 'background.paper', borderRadius: 1 }}
       >
@@ -255,40 +272,7 @@ const ExploreMarket = ()=>{
                                 <CloseIcon/>
                                 </IconButton>
                                 </Item>
-                         <Item sx={{ width: '25ch' }}>
-                            <Typography
-                                color="textSecondary"
-                                gutterBottom
-                                variant="overline"
-                                >
-                                Market:
-                                </Typography>
-                            <AutoCompleteFieldController
-                                options={markets.map(el => ({...el, label: (el.m_name )}) )}
-                                //errors={errors.product || null}
-                                control={control}
-                                name="market"
-                                label="Market"
-                    
-                            />
-                         </Item>
-                         <Item sx={{ width: '25ch' }}> 
-                         <Typography
-                                color="textSecondary"
-                                gutterBottom
-                                variant="overline"
-                                >
-                                Category:
-                                </Typography>
-                            <AutoCompleteFieldController
-                                options={stallCategorys.map(el => ({...el, label: (el.name )}) )}
-                                //errors={errors.product || null}
-                                control={control}
-                                name="category"
-                                label="Category"
-                    
-                            />
-                        </Item>
+                         
       </Box>
             
           

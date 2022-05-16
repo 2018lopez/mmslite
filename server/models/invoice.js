@@ -65,7 +65,7 @@ const invoice ={
     post:{
         async createInvoice($invoice){
             let query = 'call sp_createInvoice(?, ?, ?, ?, ?,?,?,?) '
-            return await db(query,[$invoice.stall, $invoice.total, $invoice.dueData, $invoice.rent, $invoice.light, $invoice.water, $invoice.detail, $invoice.other],async (data)=>data[0])
+            return await db(query,[$invoice.stall, $invoice.total, $invoice.dueDate, $invoice.rent, $invoice.light, $invoice.water, $invoice.detail, $invoice.other],async (data)=>data[0])
         }
     },
 

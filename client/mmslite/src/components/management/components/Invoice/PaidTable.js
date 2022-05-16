@@ -232,7 +232,7 @@ export default function PaidTable() {
                 <StyledTableCell component="th" scope="row">
                     {invoice.Invoice}
                 </StyledTableCell>
-                <StyledTableCell align="left">{invoice.Date}</StyledTableCell>
+                <StyledTableCell align="left">{new Date(invoice.Date).toISOString().slice(0, 10)}</StyledTableCell>
                 <StyledTableCell align="left">{invoice.total}</StyledTableCell>
                 
                 <StyledTableCell align="left"><SeverityPill

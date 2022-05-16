@@ -249,7 +249,7 @@ export default function CayoTable() {
                     || 'warning'}
                   >{stall.status}</SeverityPill></StyledTableCell>
                    <StyledTableCell align="left">{stall.description}</StyledTableCell>
-                <StyledTableCell align="left"> <Button spacing="2" color="info" variant="contained" onClick={()=>editStall(stall.Stall)}><EditIcon/></Button><Button color="warning" variant="contained" onClick={() => viewStall(stall.Stall)}><PreviewIcon/></Button>
+                <StyledTableCell align="left"> <Button color="warning" variant="contained" onClick={() => viewStall(stall.Stall)}><PreviewIcon/></Button>
  </StyledTableCell>
                 
                 </StyledTableRow>

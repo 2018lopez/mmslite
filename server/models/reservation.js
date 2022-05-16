@@ -23,7 +23,17 @@ const reservation ={
             let query = 'call sp_updateREnd(?,?)'
             await db(query,[$reservation.username,$reservation.endDate ], data=>data[0])
         },
-    
+        async updateDetails($reservation){
+
+            let query = 'UPDATE `reservation` SET `business_name` = ?,\
+                         `business_tel` = ?, `business_email` =?, `facebook` = ?, \
+                         `instagram` =?, `about_us` =?\
+                         WHERE id = ?;'
+            await db(query,[$reservation.bName, $reservation.bTel, $reservation.email, 
+                            $reservation.fb, $reservation.ig, $reservation.des, $reservation.id], 
+                            data=>data
+                    )
+        }
     }
 
 }

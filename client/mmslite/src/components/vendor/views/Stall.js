@@ -34,7 +34,7 @@ export default function Stall() {
   const getReservationDetails = async () =>{
     let username = localStorage.getItem('username')
     const res = await axios.post(`http://localhost:3001/api/vendor/stall-reserve`, {username:username});
-    console.log(res.data)
+   
     setRDetails(res.data); 
     if(res.data[0].business_name !== null){
       setBNameVal(res.data[0].business_name);
@@ -58,8 +58,8 @@ export default function Stall() {
   
   const handleSubmit = async () => { 
     setOpen(true);   
-    await axios.put(`http://localhost:3001/api/stall-reservation/update/by-rv-id/${reservationId}`, 
-    {bName: bNameVal, bTel: telValue, email: emailVal, fb: fbVal, ig: igVal, des: desVal});        
+    await axios.put(`http://localhost:3001/api/vendor/update-reserve`, 
+    {id:reservationId, bName: bNameVal, bTel: telValue, email: emailVal, fb: fbVal, ig: igVal, des: desVal});        
   };
 
   const handleReset = () => {
@@ -279,24 +279,7 @@ export default function Stall() {
             // InputLabelProps={{ style: { fontSize: '90%' } }}
           />        
         </Grid>
-        <Grid item align='left'  xs={12} sm={6} md={4} lg={3} >
-          <Stack >            
-          <InputLabel sx={{fontSize: '70%'}} align='left'>
-            LOGO
-          </InputLabel>             
-          </Stack>
-          <Stack spacing={3} direction={'row'}>            
-            <div ><Avatar  alt="Vendor Name" src="" /> </div>
-            <div style={{padding: '2% 0 0 0'}}>
-              <label htmlFor="contained-button-file">
-                <Input accept="image/*" id="contained-button-file" multiple type="file" />
-                <Button size='small' variant="outlined" component='span' >
-                  Browse
-                </Button>
-              </label> 
-            </div>          
-          </Stack>
-        </Grid>
+        
         
       </Grid>
       ))}

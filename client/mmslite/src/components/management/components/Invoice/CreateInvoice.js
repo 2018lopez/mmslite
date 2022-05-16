@@ -36,6 +36,7 @@ export default function CreateInvoice() {
     const[msg, setMsg]=React.useState([])
     const [snack, setSnack] = React.useState(false);
     const [dMarket, setDMarket] = React.useState(false)
+   
     const [values, setValues] = React.useState({
         market: 'San Ignacio Market',
        stall: 'None',
@@ -56,7 +57,8 @@ export default function CreateInvoice() {
   
     let marketSelect;
     let stallSelect;
-    marketSelect = watch('market', 'San Ignacio Market')
+    marketSelect = watch('market')
+    
     stallSelect = watch('stall')
     React.useEffect(()=>{
   
@@ -64,7 +66,7 @@ export default function CreateInvoice() {
         getMarket()
         
      
-        
+        getStalls()
        
        
       }, []);
@@ -109,8 +111,7 @@ export default function CreateInvoice() {
       };
       const handleChange = async (event) => {
       
-        
-        
+      
         
         setValues({
             ...values,
@@ -118,23 +119,16 @@ export default function CreateInvoice() {
 
           
             
-        //     setSelectMarket({[values.market] : event.target.value})
-        //    let sMarket = Object.keys(selectMarket)
-        //    nMarket = sMarket.toString()
-          
-    
-        // const res = await stalls(selectMarket.m_name)
-        // setStall(res.data)
-
+  
       }
      
    
      const getStalls = async () =>{
-         const chess =  selectMarket.m_name
-        const data = {...values, market: chess }
-        console.log('Stall',data, selectMarket.m_name)
-        //  const res = await stalls(selectMarket.m_name)
-        // setStall(res.data)
+     
+     
+         const res = await stalls()
+         console.log(res.data)
+        setStall(res.data)
      }
      
     
@@ -143,44 +137,33 @@ export default function CreateInvoice() {
           const itotal =  parseFloat(values.rent) + parseFloat(values.water) + parseFloat(values.light) + parseFloat(values.other);
        const data = {...values, total: itotal }
       
-console.log('Create:', marketSelect.m_name, data)
-        //   const res = await createInvoice(data)
-        //   try{
 
-        //     if(res.status === 200){
-        //         setStatus('success')
-        //         setMsg(res.data.msg)
-        //         setSnack(true)
+          const res = await createInvoice(data)
+          try{
+
+            if(res.status === 200){
+                setStatus('success')
+                setMsg(res.data.msg)
+                setSnack(true)
               
-        //       setTimeout(() => handleClose(), 2000)
+              setTimeout(() => handleClose(), 2000)
     
     
-        //     }
-        //   }catch(e){
+            }
+          }catch(e){
   
-        //     setStatus('error')
-        //     setMsg("Failed To Create Invoice")
-        //     setSnack(true)
+            setStatus('error')
+            setMsg("Failed To Create Invoice")
+            setSnack(true)
           
-        //   setTimeout(() => handleClose(), 3000)
+          setTimeout(() => handleClose(), 3000)
             
-        //   }
+          }
 
 
       }
 
-      React.useEffect(() =>{
-       
-        console.log(marketSelect)
-        if(marketSelect !== undefined && values.market !== ""){
-          
-            console.log("PV")
-        //     const datas = setValues({...values, market:marketSelect})
-        //      const res =  stalls(datas)
-        // setStall(res.data)
-        }
-
-      }, [])
+    
 
 
      
@@ -271,10 +254,10 @@ console.log('Create:', marketSelect.m_name, data)
 
                         {stalles.map((option) => (
                         <option
-                            key={option.stall}
-                            value={option.stall}
+                            key={option.code_name}
+                            value={option.code_name}
                         >
-                            {option.stall}
+                            {option.code_name}
                         </option>
                         ))} 
                             

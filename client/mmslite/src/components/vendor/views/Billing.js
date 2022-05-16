@@ -218,7 +218,8 @@ export default function BillingInfo() {
   const getReservation = async () => {
     let username = localStorage.getItem('username')
     const res = await axios.post(`http://localhost:3001/api/vendor/bill-end`,{username:username})    
-    console.log(res)
+   
+    
     setReservation(res.data)        
   }
 
@@ -260,7 +261,7 @@ export default function BillingInfo() {
         </Grid>
         <Grid item lg={4} md={4} xs={12}> 
           <div style={{color: 'grey'}}>Reservation Expiry Date</div> 
-         <div>   {reservation.end} </div>
+         <div>  {new Date(reservation.end).toISOString().slice(0, 10)} </div>
         </Grid>
         <Grid item lg={4} md={4} xs={12}>
           <Button variant="contained" size="medium" onClick={handleClickOpen}> 

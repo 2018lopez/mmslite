@@ -14,7 +14,7 @@ export const routes = (
         <Route path='Stall' element={<Stall/>}/>
         <Route path='Invoices' element={<Invoice/>}/>
         <Route path='Inquiry' element={<Inquiry/>}/>
-        <Route path='Vendors' element={<Vendor/>}/>
+      
     </Routes>
   </React.Fragment>
 );

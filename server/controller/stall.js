@@ -6,6 +6,12 @@ const stall = {
 
     get:{
 
+        async byStallName(req,res){
+
+            let stall = await Stall.get.stallByName()
+            res.send(stall)
+        },
+
        async totalStall(req, res){
 
         let stall = await Stall.get.totalStall()
@@ -128,7 +134,7 @@ const stall = {
 
             stall.stallName = req.body.stall
             stall.stallStatus = req.body.sstatus
-            stall.stallFee = req.body.fee
+         
 
             try{
 
