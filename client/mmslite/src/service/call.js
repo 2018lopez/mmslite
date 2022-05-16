@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const login = async (user) => {
     try {
-      const response = await axios.post('http://localhost:3001/api/user-login', { ...user });
+      const response = await axios.post('/api/user-login', { ...user });
       return response;
     } catch (error) {
       console.log(error)
@@ -11,7 +11,7 @@ export const login = async (user) => {
 
 export const create = async (user) => {
   try {
-    const response = await axios.post('http://localhost:3001/api/user', { ...user });
+    const response = await axios.post('/api/user', { ...user });
     
    return response;
   } catch (error) {
@@ -20,7 +20,7 @@ export const create = async (user) => {
 };
 export const resetPassword = async (user) => {
   try {
-    const response = await axios.put('http://localhost:3001/api/edit-password', { ...user });
+    const response = await axios.put('/api/edit-password', { ...user });
     return response;
   } catch (error) {
     console.log(error)
@@ -31,7 +31,7 @@ export const getRoles = async() => {
 
   try{
 
-    const response = await axios.get('http://localhost:3001/api/roles')
+    const response = await axios.get('/api/roles')
     return response
 
   }catch(error){
@@ -43,7 +43,7 @@ export const getDistricts = async() => {
 
   try{
 
-    const response = await axios.get('http://localhost:3001/api/districts')
+    const response = await axios.get('/api/districts')
     return response
 
   }catch(error){
@@ -57,7 +57,7 @@ export const userByRole = async (username) => {
   
     try {
     
-      const response = await axios.get(`http://localhost:3001/api/user-role/${username}`)
+      const response = await axios.get(`/api/user-role/${username}`)
       return response;
 
     } catch (error) {
@@ -68,7 +68,7 @@ export const userByRole = async (username) => {
 export const Inquiries = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/inquiry`)
+    const response = await axios.get(`/api/inquiry`)
     return response;
 
   }catch(e){
@@ -81,7 +81,7 @@ export const totalInquiry = async () =>{
 
   try{
 
-    const response = await axios.get(`http://localhost:3001/api/totalinquiry`)
+    const response = await axios.get(`/api/totalinquiry`)
     let data = response.data[0].total
     return data;
 
@@ -95,7 +95,7 @@ export const totalInvoice = async () =>{
 
   try{
 
-    const response = await axios.get(`http://localhost:3001/api/totalinvoice`)
+    const response = await axios.get(`/api/totalinvoice`)
     let data = response.data[0].total
     return data;
 
@@ -108,7 +108,7 @@ export const totalVendor = async () =>{
 
   try{
 
-    const response = await axios.get(`http://localhost:3001/api/totalvendor`)
+    const response = await axios.get(`/api/totalvendor`)
     let data = response.data[0].total
     return data;
 
@@ -121,7 +121,7 @@ export const totalStall = async () =>{
 
   try{
 
-    const response = await axios.get(`http://localhost:3001/api/totalstall`)
+    const response = await axios.get(`/api/totalstall`)
     let data = response.data[0].total
     return data;
 
@@ -134,7 +134,7 @@ export const totalExpense = async(user ) =>{
 
   try{
    
-    const response = await axios.post(`http://localhost:3001/api/vendor/totalexpense`, { username : user})
+    const response = await axios.post(`/api/vendor/totalexpense`, { username : user})
     let data = response.data[0]
     return data;
 
@@ -147,7 +147,7 @@ export const invoiceStatus = async(user ) =>{
 
   try{
    
-    const response = await axios.post(`http://localhost:3001/api/vendor/invoicestatus`, { username : user})
+    const response = await axios.post(`/api/vendor/invoicestatus`, { username : user})
     let data = response.data[0]
     return data;
 
@@ -159,7 +159,7 @@ export const invoiceStatus = async(user ) =>{
 export const invoiceReport  = async (user) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/vendor/invoice-report`, { username : user})
+    const response = await axios.post(`/api/vendor/invoice-report`, { username : user})
     let data = response.data[0]
     return data;
   }catch(e){
@@ -173,7 +173,7 @@ export const invoiceReport  = async (user) =>{
 export const stockReport  = async (user) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/vendor/product-stock`, { username : user})
+    const response = await axios.post(`/api/vendor/product-stock`, { username : user})
     let data = response.data[0]
     return data;
   }catch(e){
@@ -185,7 +185,7 @@ export const stockReport  = async (user) =>{
 export const invoiceList  = async () =>{
 
   try{
-    const response = await axios.get(`http://localhost:3001/api/admin/invoices`)
+    const response = await axios.get(`/api/admin/invoices`)
     
     return response;
   }catch(e){
@@ -198,7 +198,7 @@ export const getMarkets = async() => {
 
   try{
 
-    const response = await axios.get('http://localhost:3001/api/admin/markets')
+    const response = await axios.get('/api/admin/markets')
     return response
 
   }catch(error){
@@ -209,7 +209,7 @@ export const getMarkets = async() => {
 export const stalls  = async (stallName) =>{
 
   try{
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls`)
+    const response = await axios.get(`/api/admin/stalls`)
    
     return response;
   }catch(e){
@@ -221,7 +221,7 @@ export const stalls  = async (stallName) =>{
 export const invoicePending  = async () =>{
 
   try{
-    const response = await axios.get(`http://localhost:3001/api/admin/invoice-pending`)
+    const response = await axios.get(`/api/admin/invoice-pending`)
     
     return response;
   }catch(e){
@@ -233,7 +233,7 @@ export const invoicePending  = async () =>{
 export const viewInvoiceByNo  = async (invoiceNo) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/admin/invoices-id`, { invoice: invoiceNo})
+    const response = await axios.post(`/api/admin/invoices-id`, { invoice: invoiceNo})
     let data = response.data[0]
     return data;
   }catch(e){
@@ -244,7 +244,7 @@ export const viewInvoiceByNo  = async (invoiceNo) =>{
 
 export const createInvoice = async (invoice) => {
   try {
-    const response = await axios.post('http://localhost:3001/api/admin/create-invoice', { ...invoice });
+    const response = await axios.post('/api/admin/create-invoice', { ...invoice });
     
    return response;
   } catch (error) {
@@ -256,7 +256,7 @@ export const updateInvoiceStatus = async (invoice) =>{
  
 
   try {
-    const response = await axios.put('http://localhost:3001/api/admin/update-invoice', { ...invoice });
+    const response = await axios.put('/api/admin/update-invoice', { ...invoice });
     
    return response;
   } catch (error) {
@@ -267,7 +267,7 @@ export const updateInvoiceStatus = async (invoice) =>{
 export const stallsInCayo = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls-cayo`)
+    const response = await axios.get(`/api/admin/stalls-cayo`)
     return response;
 
   }catch(e){
@@ -281,7 +281,7 @@ export const stallsInCayo = async() =>{
 export const viewStallByCode  = async (stallC) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/admin/stalls-code`, { stallCode : stallC})
+    const response = await axios.post(`/api/admin/stalls-code`, { stallCode : stallC})
     let data = response.data[0]
     return data;
   }catch(e){
@@ -293,7 +293,7 @@ export const viewStallByCode  = async (stallC) =>{
 
 export const createStall = async (stall) => {
   try {
-    const response = await axios.post('http://localhost:3001/api/admin/create-stall', stall, {headers: {
+    const response = await axios.post('/api/admin/create-stall', stall, {headers: {
       'Content-Type': 'multipart/form-data'
     }});
     console.log(response)
@@ -308,7 +308,7 @@ export const updateStall = async (stall) =>{
  
 
   try {
-    const response = await axios.put('http://localhost:3001/api/admin/update-stall', { ...stall });
+    const response = await axios.put('/api/admin/update-stall', { ...stall });
     
    return response;
   } catch (error) {
@@ -319,7 +319,7 @@ export const updateStall = async (stall) =>{
 export const stallsInCorozal = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls-corozal`)
+    const response = await axios.get(`/api/admin/stalls-corozal`)
     return response;
 
   }catch(e){
@@ -331,7 +331,7 @@ export const stallsInCorozal = async() =>{
 export const stallsInOrange = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls-orange`)
+    const response = await axios.get(`/api/admin/stalls-orange`)
     return response;
 
   }catch(e){
@@ -343,7 +343,7 @@ export const stallsInOrange = async() =>{
 export const stallsInBelize = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls-belize`)
+    const response = await axios.get(`/api/admin/stalls-belize`)
     return response;
 
   }catch(e){
@@ -354,7 +354,7 @@ export const stallsInBelize = async() =>{
 export const stallsInStann = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls-stann`)
+    const response = await axios.get(`/api/admin/stalls-stann`)
     return response;
 
   }catch(e){
@@ -367,7 +367,7 @@ export const stallsInStann = async() =>{
 export const stallsInToledo = async() =>{
 
   try {
-    const response = await axios.get(`http://localhost:3001/api/admin/stalls-toledo`)
+    const response = await axios.get(`/api/admin/stalls-toledo`)
     return response;
 
   }catch(e){
@@ -380,7 +380,7 @@ export const stallsInToledo = async() =>{
 export const invTotalPaidPending  = async () =>{
 
   try{
-    const response = await axios.get(`http://localhost:3001/api/admin/invoice-total`)
+    const response = await axios.get(`/api/admin/invoice-total`)
   
     return response ;
   }catch(e){
@@ -392,7 +392,7 @@ export const invTotalPaidPending  = async () =>{
 export const vendorStallTotal  = async (user) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/vendor/stalls-total`, { username : user})
+    const response = await axios.post(`/api/vendor/stalls-total`, { username : user})
     let data = response.data[0]
     return data;
   }catch(e){
@@ -404,7 +404,7 @@ export const vendorStallTotal  = async (user) =>{
 export const vendorLatestInvoice = async (user) =>{
 
   try{
-    const response = await axios.post(`http://localhost:3001/api/vendor/latest-invoice`, { username : user})
+    const response = await axios.post(`/api/vendor/latest-invoice`, { username : user})
    
     return response;
   }catch(e){
@@ -416,7 +416,7 @@ export const vendorLatestInvoice = async (user) =>{
 export const customerStallView = async () =>{
 
   try{
-    const response = await axios.get(`http://localhost:3001/api/customer/stalls`)
+    const response = await axios.get(`/api/customer/stalls`)
    
     return response;
   }catch(e){
@@ -428,7 +428,7 @@ export const customerStallView = async () =>{
 export const stallCategory = async () =>{
 
   try{
-    const response = await axios.get(`http://localhost:3001/api/customer/stall-category`)
+    const response = await axios.get(`/api/customer/stall-category`)
    
     return response;
   }catch(e){
@@ -442,7 +442,7 @@ export const stallCategory = async () =>{
 export const createProduct = async (product) => {
   try {
     console.log(product)
-    const response = await axios.post('http://localhost:3001/api/vendor/create-product', product, {headers: {
+    const response = await axios.post('/api/vendor/create-product', product, {headers: {
       'Content-Type': 'multipart/form-data'
     }});
     

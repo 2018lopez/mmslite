@@ -27,7 +27,7 @@ const ProductListing = ()=>{
 
       const getProduct = async() =>{
           let stall = location.state.name
-        const res = await axios.post('http://localhost:3001/api/customer/product-stall',{stall:stall})
+        const res = await axios.post('/api/customer/product-stall',{stall:stall})
         setItem(res.data)
       }
 

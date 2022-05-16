@@ -379,7 +379,7 @@ export default function CayoTable() {
                        <CardMedia
                             component="img"
                             height="200"
-                            image={`http://localhost:3001/${viewStalls.stallimg}`}
+                            image={`/${viewStalls.stallimg}`}
                             alt="Stall Image"
                         />
                       

@@ -32,7 +32,7 @@ export default function Inquiry() {
         detail: textValue
      }
      console.log(sendData)
-     axios.post('http://localhost:3001/api/vendor/create-inquiry', 
+     axios.post('/api/vendor/create-inquiry', 
     {...sendData}); 
     setTextValue("");
     setSubjectValue("");

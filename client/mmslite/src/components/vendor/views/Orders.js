@@ -79,14 +79,14 @@ export default function OrderTable() {
   
   const getOrders = async () => {
     let username = localStorage.getItem('username')
-    const res = await axios.post(`http://localhost:3001/api/vendor/orders`,{username:username})    
+    const res = await axios.post(`/api/vendor/orders`,{username:username})    
     setOrder(res.data)    
   }
 
   //retrieve row id and new status value after update
   const updateOrder = async(id, stat) => { 
     // send updates to database with item id and item value 
-    await axios.put(`http://localhost:3001/api/vendor/update-order`, {status: stat, id:id})    
+    await axios.put(`/api/vendor/update-order`, {status: stat, id:id})    
     // refresh order data list
     getOrders()      
   }
@@ -98,7 +98,7 @@ export default function OrderTable() {
   
   //open dialog and get ordered items
   const orderDetails = async(id) => {
-    const res = await axios.post(`http://localhost:3001/api/vendor/order-details`, {id:id})    
+    const res = await axios.post(`/api/vendor/order-details`, {id:id})    
     setOrderItems(res.data)      
     
     orders.map(row =>{

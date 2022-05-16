@@ -59,7 +59,7 @@ export default function Product() {
 
   const getProducts = async () => {
     let username = localStorage.getItem('username')
-    const res = await axios.post(`http://localhost:3001/api/vendor/product-vendor`, {username: username});
+    const res = await axios.post(`/api/vendor/product-vendor`, {username: username});
     setProduct(res.data)
     
     setName(res.data[0].product)
@@ -286,7 +286,7 @@ export default function Product() {
                   width={50}
                   height={45} 
                   alt= 'img' 
-                  src={`http://localhost:3001/${pImg}`}
+                  src={`/${pImg}`}
                 />
                 </ListItem>
                 </List>

@@ -37,8 +37,8 @@ const InvoiceReport = ()=>{
  
     
     const  createAndDownloadPdf = () => {
-        axios.post('http://localhost:3001/api/vendor/create-invoice-pdf', inv)
-          .then(() => axios.get('http://localhost:3001/api/vendor/invoice-pdf', { responseType: 'blob' }))
+        axios.post('/api/vendor/create-invoice-pdf', inv)
+          .then(() => axios.get('/api/vendor/invoice-pdf', { responseType: 'blob' }))
           .then((res) => {
             const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
     

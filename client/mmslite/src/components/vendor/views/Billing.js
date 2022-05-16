@@ -207,7 +207,7 @@ export default function BillingInfo() {
 
   const getInvoice = async () => {
     let username = localStorage.getItem('username')
-    const res = await axios.post(`http://localhost:3001/api/vendor/invoice-reserve`, {username:username})    
+    const res = await axios.post(`/api/vendor/invoice-reserve`, {username:username})    
     setInvoice(res.data)        
   }
 
@@ -217,7 +217,7 @@ export default function BillingInfo() {
 
   const getReservation = async () => {
     let username = localStorage.getItem('username')
-    const res = await axios.post(`http://localhost:3001/api/vendor/bill-end`,{username:username})    
+    const res = await axios.post(`/api/vendor/bill-end`,{username:username})    
    
     
     setReservation(res.data)        
@@ -244,7 +244,7 @@ export default function BillingInfo() {
     let vdata ={}
     vdata.username = username
     vdata.endDate =new Date(dateValue).toISOString().slice(0, 10)
-    await axios.put(`http://localhost:3001/api/vendor/update-reserve-date`, {...vdata})    
+    await axios.put(`/api/vendor/update-reserve-date`, {...vdata})    
     //refresh order data list
     getReservation() 
   }

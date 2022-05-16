@@ -53,7 +53,7 @@ const Main = ()=>{
                       <CardMedia
                             component="img"
                             height="250"
-                            image={`http://localhost:3001/uploads/1652480333114.jpg`}
+                            image={`/uploads/1652480333114.jpg`}
                             alt="Stall Image"
                         />
                       </Grid>

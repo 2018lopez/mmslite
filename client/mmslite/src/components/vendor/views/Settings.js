@@ -29,7 +29,7 @@ export default function Settings() {
 
   const getVendorDetails = async () => {
     let username= localStorage.getItem('username')
-    const res = await axios.post('http://localhost:3001/api/vendor/profile', {username: username});    
+    const res = await axios.post('/api/vendor/profile', {username: username});    
     setVendorProfile(res.data)    
     setTelValue(res.data[0].tel)
     setUsernameValue(res.data[0].username)  
@@ -38,7 +38,7 @@ export default function Settings() {
   
   const handleSave = async() => {
     setOpen(true);
-    await axios.put(`http://localhost:3001/api/vendor/update-setting`, 
+    await axios.put(`/api/vendor/update-setting`, 
     {id: userId, tel: telValue, username: usernameValue});        
   };
   const handleReset = () => {

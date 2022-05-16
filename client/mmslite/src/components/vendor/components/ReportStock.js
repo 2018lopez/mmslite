@@ -35,8 +35,8 @@ const StockReport= ()=>{
  
     
     const  createAndDownloadPdf = () => {
-        axios.post('http://localhost:3001/api/vendor/create-product-pdf', stk)
-          .then(() => axios.get('http://localhost:3001/api/vendor/product-pdf', { responseType: 'blob' }))
+        axios.post('/api/vendor/create-product-pdf', stk)
+          .then(() => axios.get('/api/vendor/product-pdf', { responseType: 'blob' }))
           .then((res) => {
             const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
     

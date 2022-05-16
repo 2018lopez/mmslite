@@ -33,7 +33,7 @@ export default function Stall() {
 
   const getReservationDetails = async () =>{
     let username = localStorage.getItem('username')
-    const res = await axios.post(`http://localhost:3001/api/vendor/stall-reserve`, {username:username});
+    const res = await axios.post(`/api/vendor/stall-reserve`, {username:username});
    
     setRDetails(res.data); 
     if(res.data[0].business_name !== null){
@@ -58,7 +58,7 @@ export default function Stall() {
   
   const handleSubmit = async () => { 
     setOpen(true);   
-    await axios.put(`http://localhost:3001/api/vendor/update-reserve`, 
+    await axios.put(`/api/vendor/update-reserve`, 
     {id:reservationId, bName: bNameVal, bTel: telValue, email: emailVal, fb: fbVal, ig: igVal, des: desVal});        
   };
 
